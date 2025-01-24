@@ -42,11 +42,6 @@ form {
   flex-direction: column;
 }
 
-label {
-  margin-bottom: 5px;
-  color: #bbb;
-}
-
 input {
   padding: 10px;
   margin-bottom: 15px;

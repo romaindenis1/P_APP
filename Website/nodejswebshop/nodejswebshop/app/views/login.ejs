@@ -4,36 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>P_APP Romain</title>
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <h1>E-Commerce Store de <%= name %></h1>
     <div class="LoginButton">
-      <div class="LoginButtonItem">
-        <h2>Login</h2>
-        <form action="" method="POST">
-          <label for="username"></label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Enter your username"
-            required
-          />
-          <br />
-          <label for="password"></label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            required
-          />
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-        <p>Don't have an account? <a href="/register">Register here</a></p>
-      </div>
+      <h2 id="Changable_Title">Login</h2>
+      <form id="auth-form" action="" method="POST">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          required
+        />
+        <br />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+      <p id="Changable_Link">
+        Don't have an account?
+        <a href="#" id="toggle-link-register">Register here</a>
+      </p>
     </div>
+
+    <script>
+      function toggleForm(event) {
+        event.preventDefault();
+        const title = document.getElementById("Changable_Title");
+        const link = document.getElementById("Changable_Link");
+        const form = document.getElementById("auth-form");
+
+        if (title.textContent === "Login") {
+          title.textContent = "Register";
+          link.innerHTML =
+            'Already have an account? <a href="#" id="toggle-link-login">Login here</a>';
+          // Pour changer l'action du formulaire dans le futur
+          // form.action = "/register";
+        } else {
+          title.textContent = "Login";
+          link.innerHTML =
+            'Don\'t have an account? <a href="#" id="toggle-link-register">Register here</a>';
+          // Pour changer l'action du formulaire dans le futur
+          // form.action = "/login";
+        }
+
+        // Pour pouvoir re-toggle
+        document
+          .querySelector("#Changable_Link a")
+          .addEventListener("click", toggleForm);
+      }
+
+      // Check intiale
+      document
+        .querySelector("#Changable_Link a")
+        .addEventListener("click", toggleForm);
+    </script>
   </body>
 </html>

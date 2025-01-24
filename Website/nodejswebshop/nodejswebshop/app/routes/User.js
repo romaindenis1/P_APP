@@ -9,10 +9,6 @@ router.get("/login", (req, res) => {
   res.render("login", { name: "Romain" });
 });
 
-router.get("/register", (req, res) => {
-  res.render("register", { name: "Romain" });
-});
-
 router.get("/", controller.get);
 
 module.exports = router;
