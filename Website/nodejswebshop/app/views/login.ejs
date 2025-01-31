@@ -46,14 +46,14 @@
           title.textContent = "Register";
           link.innerHTML =
             'Already have an account? <a href="#" id="toggle-link-login">Login here</a>';
-          // Pour changer l'action du formulaire dans le futur
-          // form.action = "/register";
+
+          form.action = "/user/register";
         } else {
           title.textContent = "Login";
           link.innerHTML =
             'Don\'t have an account? <a href="#" id="toggle-link-register">Register here</a>';
-          // Pour changer l'action du formulaire dans le futur
-          // form.action = "/login";
+
+          form.action = "/user/login";
         }
 
         // Pour pouvoir re-toggle

@@ -1,9 +1,3 @@
-# Creation date : 18.03.2024
-# Created by : CSR
-# Description : This compose file creates a stack of two containers (nodejs + mysql)
-#
-version: "2"
-
 services:
   db:
     image: mysql:8.0.30
@@ -14,7 +8,7 @@ services:
       MYSQL_PASSWORD: db_user_pass
     restart: always
     ports:
-      - "6033:3306"
+      - "6033:3306" # Exposing the container's 3306 port to host's 6033
     volumes:
       - dbdata:/var/lib/mysql
 
@@ -25,9 +19,11 @@ services:
       - db
     environment:
       PMA_HOST: db
-      PMA_PORT: 3306
+      PMA_PORT: 6033
       PMA_ARBITRARY: 1
     restart: always
+    ports:
+      - 8081:80
 
   nodejs:
     build:
@@ -36,7 +32,6 @@ services:
     user: "node"
     working_dir: /home/node/app
     environment:
-      #- NODE_ENV=production
       - NODE_ENV=development
     volumes:
       - ./app:/home/node/app
@@ -45,8 +40,9 @@ services:
       - "8080"
     ports:
       - "8080:8080"
+    depends_on:
+      - db
     command: "npm start"
-    #command: "npm run dev"
 
 # The database will be persistent among containers restarts.
 volumes:
