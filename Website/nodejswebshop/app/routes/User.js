@@ -5,7 +5,7 @@ const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-
+const privateKey = process.env.PRIVATE_KEY;
 // Create a connection to the MySQL database
 const connection = mysql.createConnection({
   host: "db_container",
@@ -57,7 +57,7 @@ router.post("/login", (req, res) => {
 
   const query = "SELECT * FROM t_users WHERE username = ?";
   connection.query(query, [username], (err, results) => {
-    if (results.length === 0) {
+    if (!results) {
       return res.status(400).send("Invalid username or password");
     }
 
@@ -73,7 +73,7 @@ router.post("/login", (req, res) => {
       }
       const hash = derivedKey.toString("hex");
       if (hash === storedHash) {
-        const token = jwt.sign({ userId: user.id }, dotenv.privateKey, {
+        const token = jwt.sign({ userId: user.id }, process.env.privateKey, {
           expiresIn: "1y",
         });
 
