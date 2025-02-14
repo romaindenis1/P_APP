@@ -70,6 +70,9 @@ router.post("/login", (req, res) => {
       }
       const hash = derivedKey.toString("hex");
       if (hash === storedHash) {
+        const token = jwt.sign({ userId: user.id }, privateKey, {
+          expiresIn: "1y",
+        });
         res.status(200).send("Bonjour, " + username);
       } else {
         res.status(401).send("Invalid username or password");
