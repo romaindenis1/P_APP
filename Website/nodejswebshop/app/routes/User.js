@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const crypto = require("crypto");
 const mysql = require("mysql2");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 // Create a connection to the MySQL database
 const connection = mysql.createConnection({
@@ -70,10 +73,12 @@ router.post("/login", (req, res) => {
       }
       const hash = derivedKey.toString("hex");
       if (hash === storedHash) {
-        const token = jwt.sign({ userId: user.id }, privateKey, {
+        const token = jwt.sign({ userId: user.id }, dotenv.privateKey, {
           expiresIn: "1y",
         });
+
         res.status(200).send("Bonjour, " + username);
+        console.log(token);
       } else {
         res.status(401).send("Invalid username or password");
       }
