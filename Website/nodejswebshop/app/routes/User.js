@@ -37,7 +37,9 @@ router.post("/register", (req, res) => {
         console.error("Error inserting user:", err.stack);
         return res.status(500).send("Error registering user");
       }
-      res.status(200).send("User registered successfully");
+      res
+        .status(200)
+        .send("L'utilisateur " + username + " a bien été enregistré !");
     });
   });
 });
@@ -64,16 +66,12 @@ router.post("/login", (req, res) => {
       }
       const hash = derivedKey.toString("hex");
       if (hash === storedHash) {
-        res.status(200).send("Login successful");
+        res.status(200).send("Bonjour, " + username);
       } else {
         res.status(401).send("Invalid username or password");
       }
     });
   });
-});
-
-router.get("/", (req, res) => {
-  res.send("User: Romain");
 });
 
 module.exports = router;
