@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-//const verifyToken = require("../controllers/auth.mjs");
 
-router.get("/", (req, res, verifyToken) => {
+//const verifyToken = require("../controllers/auth");
+
+// , verifyToken
+router.get("/", (req, res) => {
   res.render("accueil");
 });
 

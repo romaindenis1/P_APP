@@ -45,6 +45,12 @@ router.post("/register", (req, res) => {
         return res.status(500).send("Error registering user");
       }
       console.log("User registered:", username);
+
+      const token = jwt.sign({ username }, process.env.privateKey, {
+        expiresIn: "1y",
+      });
+      res.cookie("authcookie", token, { httpOnly: true });
+
       res.redirect("/login");
     });
   });
@@ -72,10 +78,6 @@ router.post("/login", (req, res) => {
       }
       const hash = derivedKey.toString("hex");
       if (hash === storedHash) {
-        const token = jwt.sign({ userId: user.id }, process.env.privateKey, {
-          expiresIn: "1y",
-        });
-
         console.log("User logged in:", username, "Toekn:", token);
         res.redirect("..");
       } else {

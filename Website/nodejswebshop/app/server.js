@@ -1,19 +1,24 @@
 const express = require("express");
 const app = express();
+
 const dotenv = require("dotenv");
 dotenv.config();
-const jwt = require("jsonwebtoken");
+
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+const userRouter = require("./routes/User");
+const accueilRouter = require("./routes/Accueil");
+
 const path = require("path");
 const bodyParser = require("body-parser");
-const userRoutes = require("./routes/User");
-const accueilRouter = require("./routes/Accueil");
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", accueilRouter);
-app.use("/", userRoutes);
+app.use("/", userRouter);
 
 app.listen(8080, () => {
   console.log("Server running on port 8080");
