@@ -70,6 +70,26 @@ button:hover {
   background-color: #0056b3;
 }
 
+#button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#profile-btn,
+#login-btn,
+#register-btn {
+  width: 100px;
+  height: 75px;
+  margin: 10px;
+}
+
+#button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 a {
   color: #007bff;
   text-decoration: none;
