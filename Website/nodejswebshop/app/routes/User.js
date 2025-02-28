@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
   database: "p_app",
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", (req, res, verifyToken) => {
   res.render("login");
 });
 
@@ -44,9 +44,8 @@ router.post("/register", (req, res) => {
         console.error("Error inserting user:", err.stack);
         return res.status(500).send("Error registering user");
       }
-      res
-        .status(200)
-        .send("L'utilisateur " + username + " a bien été enregistré !");
+      console.log("User registered:", username);
+      res.redirect("/login");
     });
   });
 });
@@ -77,10 +76,10 @@ router.post("/login", (req, res) => {
           expiresIn: "1y",
         });
 
-        res.status(200).send("Bonjour, " + username);
-        console.log(token);
+        console.log("User logged in:", username, "Toekn:", token);
+        res.redirect("..");
       } else {
-        res.status(401).send("Invalid username or password");
+        res.status(400).send("Invalid username or password");
       }
     });
   });
