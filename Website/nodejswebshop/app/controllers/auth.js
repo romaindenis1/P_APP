@@ -1,10 +1,12 @@
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const express = require("express");
 
+const app = express();
 app.use(cookieParser());
 
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.cookies.authcookie;
 
   if (!token) {
     console.log("No token found, skipping verification");
@@ -19,9 +21,8 @@ const verifyToken = (req, res, next) => {
 
     req.user = decoded; // Pour pouvoir utiliser l'utilisateur dans le next
     console.log("User verified:", decoded);
-
     next();
   });
 };
 
-module.exports = verifyToken;
+module.exports = { verifyToken };

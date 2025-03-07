@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-//const verifyToken = require("../controllers/auth");
+const { verifyToken } = require("../controllers/auth.js");
 
-// , verifyToken
-router.get("/", (req, res) => {
+router.get("/", verifyToken, (req, res) => {
+  if (req.user) {
+    return res.redirect("/profile");
+  }
   res.render("accueil");
 });
-
+router.get("/profile", verifyToken, (req, res) => {
+  res.render("profile", { username: req.user.username });
+});
 module.exports = router;

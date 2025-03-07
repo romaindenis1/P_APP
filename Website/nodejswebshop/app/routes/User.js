@@ -44,13 +44,13 @@ router.post("/register", (req, res) => {
         console.error("Error inserting user:", err.stack);
         return res.status(500).send("Error registering user");
       }
-      console.log("User registered:", username);
 
       const token = jwt.sign({ username }, process.env.privateKey, {
         expiresIn: "1y",
       });
+      console.log("User registered:", username, "Toekn:", token);
       res.cookie("authcookie", token, { httpOnly: true });
-
+      console.log("Cookie set:", req.cookies.authcookie);
       res.redirect("/login");
     });
   });
@@ -59,7 +59,6 @@ router.post("/register", (req, res) => {
 // Handle login
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
-
   const query = "SELECT * FROM t_users WHERE username = ?";
   connection.query(query, [username], (err, results) => {
     if (!results) {
@@ -78,7 +77,7 @@ router.post("/login", (req, res) => {
       }
       const hash = derivedKey.toString("hex");
       if (hash === storedHash) {
-        console.log("User logged in:", username, "Toekn:", token);
+        console.log("User logged in:", username);
         res.redirect("..");
       } else {
         res.status(400).send("Invalid username or password");
