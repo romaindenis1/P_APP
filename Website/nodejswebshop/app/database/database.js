@@ -21,7 +21,8 @@ db.query(
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) UNIQUE NOT NULL,
   hash VARCHAR(255) UNIQUE NOT NULL,
-  sel VARCHAR(255) NOT NULL
+  sel VARCHAR(255) NOT NULL,
+  isAdmin BOOLEAN DEFAULT FALSE
   );`,
   (err) => {
     if (err) console.error("Erreur création table :", err);
