@@ -9,7 +9,14 @@ router.get("/", verifyToken, (req, res) => {
   }
   res.render("accueil");
 });
+
 router.get("/profile", verifyToken, (req, res) => {
   res.render("profile", { username: req.user.username });
 });
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("authcookie");
+  res.redirect("/");
+});
+
 module.exports = router;
