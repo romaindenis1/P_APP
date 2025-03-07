@@ -25,7 +25,7 @@ router.get("/register", (req, res) => {
 
 router.post("/register", (req, res) => {
   const { username, password } = req.body;
-
+  const isAdmin = false;
   // Generate a salt
   const salt = crypto.randomBytes(16).toString("hex");
 
@@ -38,8 +38,9 @@ router.post("/register", (req, res) => {
 
     const hash = derivedKey.toString("hex");
 
-    const query = "INSERT INTO t_users (username, hash, sel) VALUES (?, ?, ?)";
-    connection.query(query, [username, hash, salt], (err, results) => {
+    const query =
+      "INSERT INTO t_users (username, hash, sel, isAdmin) VALUES (?, ?, ?, ?)";
+    connection.query(query, [username, hash, salt, isAdmin], (err, results) => {
       if (err) {
         console.error("Error inserting user:", err.stack);
         return res.status(500).send("Error registering user");
